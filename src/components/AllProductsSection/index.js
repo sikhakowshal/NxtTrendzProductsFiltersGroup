@@ -90,6 +90,7 @@ class AllProductsSection extends Component {
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
+
     const jwtToken = Cookies.get('jwt_token')
 
     const {
@@ -98,6 +99,7 @@ class AllProductsSection extends Component {
       activeCategoryId,
       activeRatingId,
     } = this.state
+
     const apiUrl = `https://apis.ccbp.in/products?sort_by=${activeOptionId}&category=${activeCategoryId}&title_search=${searchInput}&rating=${activeRatingId}`
     const options = {
       headers: {
@@ -130,7 +132,7 @@ class AllProductsSection extends Component {
   }
 
   renderNoProductsView = () => (
-    <>
+    <div className="no-products-view">
       <img
         src="https://assets.ccbp.in/frontend/react-js/nxt-trendz/nxt-trendz-no-products-view.png"
         alt="no products"
@@ -140,7 +142,7 @@ class AllProductsSection extends Component {
       <p className="no-products-description">
         We could not find any products. Try other filters.
       </p>
-    </>
+    </div>
   )
 
   renderProductsList = () => {
@@ -171,8 +173,7 @@ class AllProductsSection extends Component {
     </div>
   )
 
-  updateProductsList = inputValue => {
-    console.log(inputValue)
+  updateSearchInputValue = inputValue => {
     this.setState({searchInput: inputValue}, this.getProducts)
   }
 
@@ -185,7 +186,7 @@ class AllProductsSection extends Component {
   }
 
   renderFailureView = () => (
-    <>
+    <div className="failure-view">
       <img
         src="https://assets.ccbp.in/frontend/react-js/nxt-trendz/nxt-trendz-products-error-view.png"
         alt="products failure"
@@ -195,7 +196,7 @@ class AllProductsSection extends Component {
       <p className="failure-description">
         We are having some trouble processing your request. Please try again
       </p>
-    </>
+    </div>
   )
 
   resetFilters = () => {
@@ -228,18 +229,15 @@ class AllProductsSection extends Component {
   }
 
   render() {
-    const {searchInput} = this.state
-
     return (
       <div className="all-products-section">
         <FiltersGroup
           categoryOptions={categoryOptions}
           ratingsList={ratingsList}
-          updateProductsList={this.updateProductsList}
+          updateSearchInputValue={this.updateSearchInputValue}
           updateCategoryId={this.updateCategoryId}
           updateRatingId={this.updateRatingId}
           resetFilters={this.resetFilters}
-          searchInputValue={searchInput}
         />
 
         {this.renderProducts()}

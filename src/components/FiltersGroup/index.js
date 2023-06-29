@@ -1,71 +1,86 @@
-import CategoryItem from '../CategoryItem'
+import {Component} from 'react'
 
+import CategoryItem from '../CategoryItem'
 import RatingItem from '../RatingItem'
 
 import './index.css'
 
-const FiltersGroup = props => {
-  const {
-    categoryOptions,
-    ratingsList,
-    updateProductsList,
-    updateCategoryId,
-    updateRatingId,
-    resetFilters,
-    searchInputValue,
-  } = props
+class FiltersGroup extends Component {
+  state = {searchInput: ''}
 
-  const onChangeSearchInput = event => {
-    updateProductsList(event.target.value)
+  onChangeSearchInput = event => {
+    this.setState({searchInput: event.target.value})
   }
 
-  const onClickClearFilters = () => {
+  onKeyDownEvent = event => {
+    const {searchInput} = this.state
+    const {updateSearchInputValue} = this.props
+
+    if (event.key === 'Enter') {
+      updateSearchInputValue(searchInput)
+    }
+  }
+
+  onClickClearFilters = () => {
+    const {resetFilters} = this.props
     resetFilters()
   }
 
-  return (
-    <div className="filters-group-container">
-      <input
-        type="search"
-        className="search-input"
-        placeholder="Search"
-        onChange={onChangeSearchInput}
-        value={searchInputValue}
-      />
-      <div className="categories-section">
-        <h4 className="category-title">Category</h4>
-        <ul className="categories-list">
-          {categoryOptions.map(category => (
-            <CategoryItem
-              categoryItem={category}
-              key={category.categoryId}
-              updateCategoryId={updateCategoryId}
-            />
-          ))}
-        </ul>
-      </div>
+  render() {
+    const {searchInput} = this.state
 
-      <div className="ratings-section">
-        <h4 className="ratings-title">Rating</h4>
-        <ul className="ratings-container">
-          {ratingsList.map(eachRating => (
-            <RatingItem
-              key={eachRating.ratingId}
-              ratingItem={eachRating}
-              updateRatingId={updateRatingId}
-            />
-          ))}
-        </ul>
+    const {
+      categoryOptions,
+      ratingsList,
+      updateCategoryId,
+      updateRatingId,
+    } = this.props
+
+    return (
+      <div className="filters-group-container">
+        <input
+          type="search"
+          className="search-input"
+          placeholder="Search"
+          onKeyDown={this.onKeyDownEvent}
+          onChange={this.onChangeSearchInput}
+          value={searchInput}
+        />
+        <div className="categories-section">
+          <h4 className="category-title">Category</h4>
+          <ul className="categories-list">
+            {categoryOptions.map(category => (
+              <CategoryItem
+                categoryItem={category}
+                key={category.categoryId}
+                updateCategoryId={updateCategoryId}
+              />
+            ))}
+          </ul>
+        </div>
+
+        <div className="ratings-section">
+          <h4 className="ratings-title">Rating</h4>
+          <ul className="ratings-container">
+            {ratingsList.map(eachRating => (
+              <RatingItem
+                key={eachRating.ratingId}
+                ratingItem={eachRating}
+                updateRatingId={updateRatingId}
+              />
+            ))}
+          </ul>
+        </div>
+        <button
+          className="clear-filters-btn"
+          type="button"
+          onClick={this.onClickClearFilters}
+        >
+          Clear Filters
+        </button>
       </div>
-      <button
-        className="clear-filters-btn"
-        type="button"
-        onClick={onClickClearFilters}
-      >
-        Clear Filters
-      </button>
-    </div>
-  )
+    )
+  }
 }
 
 export default FiltersGroup
