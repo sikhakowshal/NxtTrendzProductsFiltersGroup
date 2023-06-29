@@ -1,0 +1,30 @@
+.ratings-item {
+  list-style-type: none;
+  margin-bottom: 5px;
+}
+
+.rating-btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 15px;
+  font-family: 'Roboto';
+  font-weight: 400;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
+
+.rating-img {
+  width: 60%;
+  margin-right: 8px;
+}
+
+.rating-btn-text {
+  color: #64748b;
+  font-size: 17px;
+  font-family: 'Roboto';
+  font-weight: 400;
+}

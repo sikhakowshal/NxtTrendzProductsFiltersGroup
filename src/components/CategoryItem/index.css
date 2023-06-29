@@ -1,0 +1,19 @@
+.category-item {
+  list-style-type: none;
+  margin-bottom: 20px;
+}
+
+.category-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
+
+.button-text {
+  color: #64748b;
+  font-size: 17px;
+  font-family: 'Roboto';
+  font-weight: 400;
+}
